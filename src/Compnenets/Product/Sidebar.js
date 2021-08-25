@@ -20,7 +20,7 @@ const Sidebar=()=>{
 
 
     useEffect(()=>{
-        const index=find_index(PRODUCT_ID)+1;
+        const index=find_index(PRODUCT_ID)+2;
         const nums=(Math.round((index/PAGE_SIZE)));
         if(PRODUCT_ID){
             setNumber(nums);
@@ -43,7 +43,6 @@ const Sidebar=()=>{
     return(
         
         <div className="w-full h-full  flex flex-col items-center ">
-                                            <p>{number}</p>
            <div className='flex-grow w-full  '>
                 <ul className="w-full h-full  flex flex-col items-center justify-between ">
                     {product.map((item)=>{
