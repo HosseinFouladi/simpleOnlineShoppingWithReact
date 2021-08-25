@@ -1,7 +1,6 @@
 
-import { useEffect, useState } from "react";
-import { useUser,useSetUser,useCurrentUser,useSetCurrentUser} from "../../State_Manager/ContextProvider";
-import Form from '../Form.js';
+import { useState } from "react";
+import { useCurrentUser,useSetCurrentUser} from "../../State_Manager/ContextProvider";
 import "./../../index.css";
 import './../../Styles/Form.css';
 import { Validatin } from "./Validation";
@@ -14,22 +13,16 @@ import Notif from "./Notification";
 function Signup (){
 
     const[isValid,setIsValid]=useState(false);
-    const users=useUser()
-    const setUser=useSetUser()
     const[emailError,setEmailError]=useState('');
     const[passwordError,setPasswordError]=useState('');
     const currentUser=useCurrentUser();
     const setCurrentUser=useSetCurrentUser();
 
-
-    
     const handleSubmit=async(e)=>{
         e.preventDefault();
         const data=isValid?await saveUser(API_URL.SIGN_UP,{...currentUser}):null;
-        console.log(data); 
         data.status===200?Notif("Sign Up Message!","You Signed Up Successfully!"):Notif("Sign up","Error in Request")
     }
-
     //get input data and save in context after validation:
     const handleChange=(e)=>{
         const{name,value}=e.target;
@@ -40,8 +33,7 @@ function Signup (){
     }
  
     return(
-        <div className="w-full h-full main">
-
+    <div className="w-full h-full main">
         <div className="flex justify-center  center_parent w-3/5 h-4/5 ">
             <div className="w-full h-full mt-4 shadow-lg z-2 border-lg  flex mt-24">
                 <div className="bg-white w-1/2 h-full flex  flex-col items-center justify-between px-2">
@@ -80,8 +72,7 @@ function Signup (){
                 </div>
             </div>
         </div>
-
-        </div>
+    </div>
     )
 }
 

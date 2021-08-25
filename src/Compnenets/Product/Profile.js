@@ -3,7 +3,7 @@ import './../../index.css'
 import Sidebar from './Sidebar';
 import Product from './Product';
 import Navbar from './Navbar';
-import { useSetUser,useUser,useSetProduct,useProduct, usePopup } from '../../State_Manager/ContextProvider';
+import { useSetUser} from '../../State_Manager/ContextProvider';
 import { useEffect, useState } from 'react';
 import { API_URL, USER_ID } from '../General/Constants';
 import { getData } from '../General/Helper';
@@ -12,20 +12,16 @@ import Popup from './Popup';
 const Profile=()=>{
 
      const[id,setId]=useState(USER_ID);
-     const setUser=useSetUser();
-     const pop=usePopup();
-   
+     const setUser=useSetUser();   
   
     useEffect(async()=>{
       try{
         const data= await getData(`${API_URL.FIND_USER}/${id}`);
         setUser(data.data);
-        console.log(data.data.id)
       }catch(err){
           console.log(err)
       }
     },[])
-
 
     return(
         <div className="relative w-full h-full main flex justify-center items-center" >

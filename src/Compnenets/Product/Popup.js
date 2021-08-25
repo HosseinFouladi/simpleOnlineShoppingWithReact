@@ -1,9 +1,11 @@
 import './../../Styles/Form.css';
 import './../../index.css'
 import { useEffect, useRef } from 'react';
-import { usePopup, useProduct, useSetPopup, useSetUser, useUser } from '../../State_Manager/ContextProvider';
+import { useSetPopup, useSetUser, useUser } from '../../State_Manager/ContextProvider';
 import { saveUser } from '../General/Helper';
 import { API_URL, USER_ID } from '../General/Constants';
+
+
 const Popup=()=>{
     const pop=useRef();
     const setPopup=useSetPopup();
@@ -14,7 +16,6 @@ const Popup=()=>{
         setPopup(pop);
     },[])
 
-
     const removePop=(e)=>{
         e.preventDefault();
         pop.current.classList.add('popup');
@@ -23,11 +24,8 @@ const Popup=()=>{
     const deleteProduct=async(e,id)=>{
         e.preventDefault();
         const deleted=await saveUser(`${API_URL.DELETE_PRODUCT}${USER_ID}/${id}`);
-        console.log(deleted.config)
         const deletedUser=user.products.filter(val=>val.id!=id);
         setUser({...user,products:[...deletedUser]});
-        console.log(deletedUser);
-        
     }
 
     return(

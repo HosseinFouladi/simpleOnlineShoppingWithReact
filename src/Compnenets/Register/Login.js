@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useCurrentUser,useSetCurrentUser} from "../../State_Manager/ContextProvider";
 import "./../../index.css";
 import './../../Styles/Form.css';
@@ -81,8 +81,7 @@ function Login (){
                 </div>
             </div>
         </div>
-
-        </div>
+    </div>
     )
 }
 

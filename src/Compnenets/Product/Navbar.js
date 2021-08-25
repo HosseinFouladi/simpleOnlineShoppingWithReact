@@ -1,14 +1,13 @@
 import './../../Styles/Form.css';
 import './../../index.css'
 import { useUser,useSetFilteredProducts,useProduct, usePopup, useSetPopup } from '../../State_Manager/ContextProvider';
-import { useState } from 'react';
+
 const Navbar=()=>{
 
     const user=useUser();
     const product=useProduct();
     const setFilteredProducts=useSetFilteredProducts();
     const popup=usePopup();
-    const setPopup=useSetPopup();
 
     const handleSearch=e=>{
        const {value}=e.target;
@@ -16,7 +15,6 @@ const Navbar=()=>{
             return item.title.includes(value)
         });
        setFilteredProducts(filteredProducts);
-       console.log(filteredProducts)
     }
 
     const handlePopup=(e)=>{

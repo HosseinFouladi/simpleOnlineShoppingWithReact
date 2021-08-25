@@ -1,38 +1,29 @@
 import './../../Styles/Form.css';
 import './../../index.css'
 import { useFilteredProducts, useUser } from '../../State_Manager/ContextProvider';
-import { Goto, pagination } from '../General/Helper';
-import { useState ,useRef, useEffect} from 'react';
+import {  pagination } from '../General/Helper';
+import { useState , useEffect} from 'react';
 import { PAGE_SIZE, PRODUCT_ID } from '../General/Constants';
 
 const Sidebar=()=>{
 
-    const find_index=(id)=>{
-        console.log(`id:${id}`,products)
-        return  products.findIndex(item=>item.id==id);
-    }
     const products=useFilteredProducts();
-    const [num,setNum]=useState(0);
     const [number,setNumber]=useState(1);
-    console.log(number,num)
     const pages=+products.length/PAGE_SIZE;
     const user=useUser();
 
+    const find_index=(id)=>{
+        return  products.findIndex(item=>item.id==id);
+    }
 
     useEffect(()=>{
         const index=find_index(PRODUCT_ID)+2;
         const nums=(Math.round((index/PAGE_SIZE)));
-        if(PRODUCT_ID){
+        if(PRODUCT_ID)
             setNumber(nums);
-            console.log(nums,num,index)
-        }
-          
     },[products])
 
-
-
     const handlePageNumber=e=>{
-
         e.preventDefault();
         const {name}=e.target;
         setNumber(+name);

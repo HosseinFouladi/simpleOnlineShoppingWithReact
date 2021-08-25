@@ -68,7 +68,6 @@ function ContextProvider ({children}) {
     useEffect(async()=>{
  
         try{
-
             const product_list=await getData(API_URL.PRODUCT_LIST);
             setProduct(product_list.data);
             setFilteredProducts(product_list.data)

@@ -2,13 +2,12 @@ import './../../Styles/Form.css';
 import './../../index.css'
 import { useEffect, useState } from 'react';
 import { getData, saveUser } from '../General/Helper';
-import { API_URL, USER_ID } from '../General/Constants';
+import { API_URL, PRODUCT_ID, USER_ID } from '../General/Constants';
 import Notif from '../Register/Notification';
 import { useSetUser } from '../../State_Manager/ContextProvider';
 const Product=()=>{
 
-    const productId=window.location.href.split('/')[6];
-    const[id,setId]=useState(productId);
+    const[id,setId]=useState(PRODUCT_ID);
     const[product,setProduct]=useState({});
     const [error,setError]=useState('');
     const setUser=useSetUser();
@@ -16,23 +15,17 @@ const Product=()=>{
     useEffect(async()=>{
 
         try{
-            const data= await getData(`${API_URL.FIND_PRODUCT}${productId}`);
+            const data= await getData(`${API_URL.FIND_PRODUCT}${PRODUCT_ID}`);
             setProduct(data.data);
-            console.log(data.data);
         }catch(err){
             setError("No Product has been choosed yet:)");
             console.log(err.message)
         }
-  
-
     },[id])
 
     //add to cart
      const handleAddtoCart=async(e)=>{
-
-        //e.preventDefault();
         try{
-
            const data= await saveUser(`${API_URL.ADD_TO_CART}${USER_ID}`,product);
            Notif("Adding To Cart","Product Successfully Added To Your Cart","success");
            setUser({...data.data});
@@ -78,8 +71,7 @@ const Product=()=>{
                             </div>
                             <div className=" h-2/6  flex flex-col ">
                                     <a className=" animate_product cursor-pointer lg:text-xl md:text-lg sm:text-md bg-green-600 text-white font-md transition duration-500  transform hover:-translate-y-1 hover:scale-110 shadow-sm hover:shadow-lg  lg:py-2 lg:px-4 md:py-2 md:px-2 sm:py-2 sm:px-2 rounded-xl" onClick={handleAddtoCart}> افزودن به سبد خرید</a>
-                            </div>
-                            
+                            </div>                           
                         </div>
            </div>:''}
         </div>
