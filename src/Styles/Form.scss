@@ -1,0 +1,118 @@
+@import './variables';
+.input{
+    &:valid{
+       border-bottom: 2px solid green;
+    }
+
+    &:focus{
+       outline: none;
+    }
+}
+.center_parent{
+    margin: 0 auto;
+    height: 80%;
+}
+.picture_box{
+    background-size: cover;
+    background-blend-mode: screen;
+    background-image: linear-gradient(to right top,rgb(8, 241, 230),rgb(11, 228, 228)),url(./../images/Online-Marketing.jpg);
+}
+.main{
+    background-image: linear-gradient(to right top,rgb(161, 206, 218) , rgb(66, 193, 231));
+}
+.header{
+    background-image: linear-gradient(to right,rgb(8, 241, 190),rgb(8, 140, 201));
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.main_box{
+    background-color:$color-background-section;
+    height: 90%;
+}
+.menu{
+    height: 10%;
+}
+.content{
+   height: 90%;
+}
+.app{
+    height: 100vh;
+}
+.sidebar{
+    width: 28%;
+}
+.title{
+    background-image: linear-gradient(to right,rgba($color-secondary-light,.9),rgba($color-secondary-dark,.8));
+    transform: skewY(18deg);
+}
+.product_box{
+    background-color: $color-background-section;
+}
+.product{
+    width: 72%;
+}
+.animate_product{
+    animation: btn .8s ;
+}
+
+.popup{
+    display: none;
+}
+.popup_box{
+    height: 70%;
+    width: 60%;
+    box-shadow: 10px  10px 8px gray;
+    border-radius: 50%;
+    background-image:linear-gradient(to left bottom,rgba(255, 255, 255, 0.863),rgba(255, 255, 255, 0.815)) ;
+    animation: pop_up .7s;
+ 
+  
+}
+
+.background{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(128, 128, 128,.3);
+    //opacity: 20%;
+}
+.table_item{
+    text-align: center;
+}
+
+.product_title{
+    background-image: linear-gradient(to right,rgb(241, 148, 8),rgb(8, 140, 201));
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+
+@keyframes btn {
+    
+    0%{
+        transform: translateX(-30%);
+    }
+    80%{
+        transform: translateX(10%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+
+}
+@keyframes pop_up {
+        0%{
+            transform: scale(.25)
+        }
+
+        40%{
+            transform:scale(.5);
+        }
+        80%{
+            transform: scale(1.25);
+        }
+
+        100%{
+            transform: scale(1);
+        }
+}
