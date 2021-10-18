@@ -1,18 +1,18 @@
 
 import './index.css';
-import ContextProvider from './State_Manager/ContextProvider';
 import {Switch,Route,BrowserRouter as Router}from 'react-router-dom';
 import ReactNotifications from 'react-notifications-component';
-import Signup from './Compnenets/Register/Signup';
+import Signup from './pages/Signup';
 import './index.css';
-import Login from './Compnenets/Register/Login';
-import Profile from './Compnenets/Product/Profile';
+import Login from './pages/Login';
+import Profile from './pages/Profile';
 import './Styles/Form.css';
 
+
 function App() {
+
   return (
     <div className=" w-full  app">
-      <ContextProvider>
        <ReactNotifications />
         <Router>
          <Switch>
@@ -22,7 +22,6 @@ function App() {
            <Route exact={true} path='/user/profile/:id' component={Profile}></Route>
          </Switch>
        </Router>
-      </ContextProvider>
     </div>
   )
 }

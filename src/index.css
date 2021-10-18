@@ -9,3 +9,11 @@
 .center_horizontal{
   
 }
+
+/*.input_style{
+  @apply lg:text-lg md:text-md sm:text-sm  text-blue-400 w-full border-b-2 p-2 border-gray-400;
+}
+
+.span_style{
+  @apply text-red-500 lg:text-md md:text-sm sm:text-xs;
+}*/

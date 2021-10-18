@@ -46,7 +46,8 @@ const timeout = function (s) {
 
   }
 
-  export const Goto=(url)=>{
-    window.history.replaceState({},"",url);
-    window.location.reload();
+  export const Goto=(url,props=props)=>{
+    props.history.push(url);
   }
+
+  

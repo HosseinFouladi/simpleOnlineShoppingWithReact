@@ -1,34 +1,23 @@
 import './../../Styles/Form.css';
-import './../../index.css'
-import { useEffect, useState } from 'react';
-import { getData, saveUser } from '../General/Helper';
-import { API_URL, PRODUCT_ID, USER_ID } from '../General/Constants';
-import Notif from '../Register/Notification';
-import { useSetUser } from '../../State_Manager/ContextProvider';
-const Product=()=>{
+import './../../index.css';
+import {  saveUser } from '../../helpers/Helper';
+import { API_URL } from '../../helpers/Constants';
+import Notif from '../../helpers/Notification';
+import {connect}from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentProduct } from '../../redux/product-redux/Product-selector';
+import { selectId } from '../../redux/user_redux/User-selector';
+import { setProductToUser } from '../../redux/user_redux/User-Action';
+const Product=(props)=>{
 
-    const[id,setId]=useState(PRODUCT_ID);
-    const[product,setProduct]=useState({});
-    const [error,setError]=useState('');
-    const setUser=useSetUser();
-
-    useEffect(async()=>{
-
-        try{
-            const data= await getData(`${API_URL.FIND_PRODUCT}${PRODUCT_ID}`);
-            setProduct(data.data);
-        }catch(err){
-            setError("No Product has been choosed yet:)");
-            console.log(err.message)
-        }
-    },[id])
-
+    const{product,userId,setProduct}=props;
     //add to cart
      const handleAddtoCart=async(e)=>{
         try{
-           const data= await saveUser(`${API_URL.ADD_TO_CART}${USER_ID}`,product);
+           const data= await saveUser(`${API_URL.ADD_TO_CART}${userId}`,product);
            Notif("Adding To Cart","Product Successfully Added To Your Cart","success");
-           setUser({...data.data});
+           console.log(data)
+           setProduct(product);
         }catch(err){
             console.log(err)
             Notif("Error Occured!","This Product Already Added to Your Shopping Cart!","info")
@@ -37,8 +26,8 @@ const Product=()=>{
 
     return(
         <div className="w-full h-full overflow-hidden ">
-           {error?<p className="lg:text-lg md:text-md sm:text-md text-yellow-500 mt-4 lg:ml-64 md:ml-28 sm:ml-12">{error}</p>:''}
-           {product.id?<div className="flex flex-col w-full h-full ">
+
+            {product.id?<div className="flex flex-col w-full h-full ">
                         <div className="w-full h-2/5 rounded-lg flex flex-col items-center bg-white">
                             <img className="w-2/3 h-full bg-cover  rounded-lg animate_product " src={product.image_url}></img>
                             <span className=" lg:text-xl lg:px-4 lg:py-2 title text-white uppercase font-bold lg:-mt-28 md:-mt-20 sm:-mt-16 ">{product.title}</span>
@@ -73,9 +62,18 @@ const Product=()=>{
                                     <a className=" animate_product cursor-pointer lg:text-xl md:text-lg sm:text-md bg-green-600 text-white font-md transition duration-500  transform hover:-translate-y-1 hover:scale-110 shadow-sm hover:shadow-lg  lg:py-2 lg:px-4 md:py-2 md:px-2 sm:py-2 sm:px-2 rounded-xl" onClick={handleAddtoCart}> افزودن به سبد خرید</a>
                             </div>                           
                         </div>
-           </div>:''}
+           </div>:<p className="lg:text-lg md:text-md sm:text-md text-yellow-500 mt-4 lg:ml-64 md:ml-28 sm:ml-12">No Product has been choosed yet:)</p>}
         </div>
         
     )
 }
-export default Product;
+
+const mapStateToProps=createStructuredSelector({
+    product:selectCurrentProduct,
+    userId:selectId
+})
+
+const mapDispatchToProps=dispatch=>({
+    setProduct:product=>dispatch(setProductToUser(product))
+})
+export default connect(mapStateToProps,mapDispatchToProps)(Product);
