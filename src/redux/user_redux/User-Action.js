@@ -18,12 +18,23 @@ export const setProductCount=()=>({
     type:USER_TYPES.PRODUCT_COUNT
 })
 
-export const setDeleteProduct=(product)=>({
-    type:USER_TYPES.DELETE_PRODUCT,
-    payload:product
-})
+export const setDeleteProduct=(product,userId)=>{
+
+    return{
+        type:USER_TYPES.DELETE_PRODUCT,
+        payload:{product,userId}
+    }
+}
 
 export const setTogglePopup=()=>({
     type:USER_TYPES.SET_POPUP,
     payload:''
+})
+export const setIsLoading=(loading)=>({
+    type:USER_TYPES.IS_LOADING,
+    payload:loading
+})
+
+export const setLogout=()=>({
+    type:USER_TYPES.USER_LOG_OUT
 })

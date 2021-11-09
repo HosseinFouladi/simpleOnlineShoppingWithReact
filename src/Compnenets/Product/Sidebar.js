@@ -1,6 +1,6 @@
 import './../../Styles/Form.css';
 import './../../index.css'
-import { useState , useEffect} from 'react';
+import { useState , useEffect, useCallback} from 'react';
 import { PAGE_SIZE, PRODUCT_ID } from '../../helpers/Constants';
 import{connect}from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -10,27 +10,26 @@ import { setCurrentProduct, setFilteredProducts, setPageCount, setPageNumber } f
 
 const Sidebar=(props)=>{
 
-    const{searchedProducts,pageNumber,filteredProducts,userId,pages,setFilteredProducts,setPageCount,setNumber,setProduct}=props;
+    const{searchedProducts,pageNumber,filteredProducts,product_list,pages,setFilteredProducts,setPageCount,setNumber,setProduct}=props;
 
     useEffect(()=>{
         setFilteredProducts(pageNumber);
-        console.log("after filter",filteredProducts);
-    },[pageNumber])
+    },[pageNumber,product_list])
 
     useEffect(()=>{
         setPageCount();
     },[])
 
-    const handlePageNumber=e=>{
+    const handlePageNumber=useCallback(e=>{
         e.preventDefault();
         const {name}=e.target;
         setNumber(+name);
-    }
+    },[setNumber]);
 
-    const loadProduct=(e,item)=>{
+    const loadProduct=useCallback((e,item)=>{
         e.preventDefault();
         setProduct(item);
-    }
+    },[setProduct]);
 
     return(
         <div className="w-full h-full  flex flex-col items-center ">

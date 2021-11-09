@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { useHistory } from "react-router-dom";
 import { PAGE_SIZE } from "./Constants";
 
 export const saveUser=async(url,data)=>{
@@ -38,16 +39,15 @@ const timeout = function (s) {
   }
 
   export const pagination=(products,page_number)=>{
-
     const start=(page_number-1)*PAGE_SIZE;
     const end=page_number*PAGE_SIZE;
     const product=products.slice(start,end)?products.slice(start,end):products.slice(start);
     return product;
-
   }
 
-  export const Goto=(url,props=props)=>{
-    props.history.push(url);
+  export const Goto=(url,props)=>{
+    //const history=useHistory();
+      props.history.push(url);
   }
 
   

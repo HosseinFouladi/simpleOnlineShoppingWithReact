@@ -21,3 +21,8 @@ export const selectPopup=createSelector(
     [user],
     user=>user.popup
 )
+
+export const selectLoading=createSelector(
+    [user],
+    user=>user.isLoading
+)

@@ -1,30 +1,33 @@
 import './../../Styles/Form.css';
 import './../../index.css'
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { selectCurrentUser, selectPopup } from '../../redux/user_redux/User-selector';
 import { createStructuredSelector } from 'reselect';
-import { setDeleteProduct } from '../../redux/user_redux/User-Action';
+import { setDeleteProduct, setTogglePopup } from '../../redux/user_redux/User-Action';
 import StripeCheckoutButton from '../payment/Stripe-button';
+
 
 
 const Popup=(props)=>{
     const pop=useRef();
-    const{currentUserData,setDeleteProduct,popup}=props;
+    const{currentUserData,setDeleteProduct,popup,setPopup}=props;
 
     useEffect(()=>{
         popup?pop.current.classList.remove('popup'):pop.current.classList.add('popup')
     },[popup])
-    
-    const removePop=(e)=>{
+
+    const removePop=useCallback((e)=>{
         e.preventDefault();
         pop.current.classList.add('popup');
-    }
+        setPopup();
+    },[popup]);
 
-    const deleteProduct=async(e,product)=>{
+  
+      const deleteProduct=useCallback((e,product)=>{
         e.preventDefault();
-        setDeleteProduct(product);
-    }
+        setDeleteProduct(product,currentUserData.id);
+    },[setDeleteProduct]);
 
     return(
 
@@ -36,7 +39,7 @@ const Popup=(props)=>{
                  <table className="w-4/5 flex flex-col  h-3/5 overflow-auto bg-gray-100 z-60 rounded-lg border-2 ">
                      <th className="flex justify-around items-center bg-gray-400  h-1/6 lg:text-lg font-serif">
                        
-                         <td>پرداخت</td>
+                         <td className={pop?'hidden':''}>پرداخت</td>
                          <td >عملیات</td>
                          <td>قیمت(تومان)</td>
                          <td>نام محصول</td>
@@ -63,10 +66,13 @@ const Popup=(props)=>{
 
 const mapStateToProps=createStructuredSelector({
     currentUserData:selectCurrentUser,
-    popup:selectPopup
+    popup:selectPopup,
+
 })
 
 const mapDispatchToProps=dispatch=>({
-    setDeleteProduct:product=>dispatch(setDeleteProduct(product))
+    setDeleteProduct:(product,userId)=>dispatch(setDeleteProduct(product,userId)),
+    setPopup:()=>dispatch(setTogglePopup())
 })
+
 export default connect(mapStateToProps,mapDispatchToProps)(Popup);

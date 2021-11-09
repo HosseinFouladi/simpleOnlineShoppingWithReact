@@ -1,5 +1,5 @@
 import InputForm from '../Compnenets/form_input/input.componenet';
-import { useState } from "react";
+import {  useCallback, useState } from "react";
 import "../index.css";
 import '../Styles/Form.css';
 import { Validatin } from "../helpers/Validation";
@@ -8,12 +8,19 @@ import {Goto, saveUser}from '../helpers/Helper';
 import {API_URL} from '../helpers/Constants';
 import Notif from "../helpers/Notification";
 import { Switch,FormControlLabel,ToggleButton,ToggleButtonGroup} from '@mui/material';
-import{connect}from 'react-redux';
-import { setCurrentUser } from '../redux/user_redux/User-Action';
+import { setCurrentUser} from '../redux/user_redux/User-Action';
+import { LoginContainer } from './Login.style';
+import {  useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { selectCurrentUser } from '../redux/user_redux/User-selector';
+
 
 
 const Login =(props)=>{
 
+    const dispatch=useDispatch();
+    const user=useSelector(selectCurrentUser);
+    
     const[isValid,setIsValid]=useState(false);
     const[emailError,setEmailError]=useState('');
     const[passwordError,setPasswordError]=useState('');
@@ -22,26 +29,30 @@ const Login =(props)=>{
         password:''
     })
 
+  
 
-    const handleSubmit=async(e)=>{
+    const handleSubmit=(e)=>{
+
+        
         e.preventDefault();
-        try{
-            const data=isValid?await saveUser(API_URL.LOGIN,userInfo):null;
-            console.log(data);
-            if(data.status===201){
-                console.log(data.data)
-                 props.setCurrentUser(data.data)
-                 Goto(`/user/profile/${data.data.id}`,props);
-                
+        console.log('im called');
+        const login=async()=>{
+            try{
+                const data=isValid?await saveUser(API_URL.LOGIN,userInfo):null;
+                if(data.status===201){
+                     dispatch(setCurrentUser(data.data));
+                     Goto(`/user/profile/${data.data.id}`,props);
+                }
+                   
+            }catch(err){
+                console.log(err)
+              Notif('Login_message',`User With This Information Not Exist (${err.message})!`,'info');
             }
-               
-            
-        }catch(err){
-            console.log(err)
-          Notif('Login_message',`User With This Information Not Exist (${err.message})!`,'info');
         }
+
+        login();
      
-    }
+    };
 
     //get input data and save in context after validation:
     const handleChange=(e)=>{
@@ -54,9 +65,10 @@ const Login =(props)=>{
             [name]:value
         })
     }
+
  
     return(
-        <div className="w-full h-full main  flex flex-col items-center justify-center">
+        <LoginContainer>
 
         <div className="flex justify-center  center_parent w-4/5  ">
             <div className="w-full h-full mt-4 shadow-lg z-2 border-lg  flex ">
@@ -75,7 +87,7 @@ const Login =(props)=>{
                             <InputForm className="w-3/4" error={passwordError} type="password"placeholder="Password"onChange={handleChange} name="password" inputClass="input_style" spanClass="span_style"/>
                             <button  className="bg-green-500 lg:px-4 lg:py-3 md:px-2 md:py-2  w-3/5 lg:mb-4 md:mb-2 hover:opacity-40 transition-all text-white font-bold lg:text-xl md:text-lg sm:text-md rounded-sm shadow-lg" >Login</button>
                             <FormControlLabel control={<Switch defaultChecked />} label="Remember Me" />
-                           
+                          
                         </form>
                     </div>
                     <div className="">
@@ -90,16 +102,16 @@ const Login =(props)=>{
                     <p className="text-gray-500 mt-2">with online marketing u can easily buy your needs for example luxery smart phone,car and .... just sign up and click to add product to your cart.</p>
                 </div>
             </div>
+         
         </div>
-    </div>
+    </LoginContainer>
     )
 }
-const mapDispatchToProps=dispatch=>({
-    setCurrentUser:user=>dispatch(setCurrentUser(user))
-})
-export default connect(null,mapDispatchToProps)(Login);
+
+export default Login;
 
 /*      <div className=" w-3/4">
                                 <input  className="input lg:text-lg md:text-md sm:text-sm  text-blue-400 w-full border-b-2 p-2 border-gray-400" stype="email"placeholder="Username"onChange={handleChange} name="username"></input>
                                 <span className="text-red-500 lg:text-md md:text-sm sm:text-xs">{emailError}</span>
                             </div>*/ 
+                            //w-full h-full main  flex flex-col items-center justify-center

@@ -8,7 +8,8 @@ const INITIAL_PRODUCT={
     filteredproducts:[],
     pages:1,
     currentProduct:{},
-    searchedProducts:[]
+    searchedProducts:[],
+    isLoading:false
 }
 
 export const productReducer=(state=INITIAL_PRODUCT,action)=>{
@@ -43,6 +44,22 @@ export const productReducer=(state=INITIAL_PRODUCT,action)=>{
                                     ...state,
                                     searchedProducts:state.filteredproducts.filter(item=>item.title.includes(action.payload))
                                 }
+                                case PRODUCT_TYPES.SATRT_FETCHING_PRODUCTS:
+                                    return{
+                                        ...state,
+                                        isLoading:true
+                                    }
+                                    case PRODUCT_TYPES.SUCCESS_FETCHING_PRODUCTS:
+                                        return {
+                                            ...state,
+                                            isLoading:false,
+                                            products:[...action.payload]
+                                        }
+                                        case PRODUCT_TYPES.FAILURE_FETCHING_PRODUCTS:
+                                            return{
+                                                ...state,
+                                                isLoading:false
+                                            }
             default:
                 return state;
             

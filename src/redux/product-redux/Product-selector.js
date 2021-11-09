@@ -29,3 +29,8 @@ export const selectSearchedProducts=createSelector(
     [product],
     products=>products.searchedProducts
 )
+
+export const selectLoading=createSelector(
+    [product],
+    products=>products.isLoading
+)

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import "../index.css";
 import '../Styles/Form.css';
 import { Validatin } from "./../helpers/Validation";
@@ -22,6 +22,7 @@ function Signup (){
         e.preventDefault();
         const data=isValid?await saveUser(API_URL.SIGN_UP,userInfo):null;
         data.status===200?Notif("Sign Up Message!","You Signed Up Successfully!"):Notif("Sign up","Error in Request")
+        console.log(userInfo);
     }
     //get input data and save in context after validation:
     const handleChange=(e)=>{
@@ -33,7 +34,7 @@ function Signup (){
             ...userInfo,
             [name]:value
         })
-    }
+    };
  
     return(
     <div className="w-full h-full main">

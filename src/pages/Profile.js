@@ -3,44 +3,41 @@ import '../Styles/Form.css';
 import Sidebar from '../Compnenets/Product/Sidebar';
 import Product from '../Compnenets/Product/Product';
 import Navbar from '../Compnenets/Product/Navbar';
-import { useEffect, useState } from 'react';
-import { API_URL, USER_ID } from '../helpers/Constants';
-import { getData } from '../helpers/Helper';
-import Popup from '../Compnenets/Product/Popup';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import { lazy, useEffect } from 'react';
 import { selectCurrentUser, selectId } from '../redux/user_redux/User-selector';
-import { setProducts } from '../redux/product-redux/Product-Action';
+import {fetchProductsStart} from '../redux/product-redux/Product-Action';
 import { setProductCount } from '../redux/user_redux/User-Action';
-const Profile=(props)=>{
+import { selectLoading } from "../redux/product-redux/Product-selector";
+import WithSpinner from "../Compnenets/Product/WithSpinner";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Suspense } from "react";
+const Popup=lazy(()=>import('../Compnenets/Product/Popup'));
 
-     const[isLoad,setIsLoad]=useState(false);
-     const{setProductCount,currentUser}=props;
-  
+const Profile=()=>{
+
+     const id=useSelector(selectId);
+     const currentUser=useSelector(selectCurrentUser);
+     const loading=useSelector(selectLoading);
+
+     const dispatch=useDispatch();
+      
      useEffect(()=>{
-        setProductCount();
+        dispatch(setProductCount());
      },[currentUser])
+
 
     useEffect(()=>{
 
-        const getProducts=async()=>{
-            try{
-                const product_list=await getData(API_URL.PRODUCT_LIST);
-                console.log(product_list)
-                props.setProduct(product_list.data);
-                setIsLoad(true)
-            }catch(err){
-                console.log(err)
-            }
-        }
-
-        getProducts();
+      dispatch(fetchProductsStart());
 
     },[])
 
     return(
         <div className="relative w-full h-full main flex justify-center items-center" >
-            <Popup></Popup>
+            <Suspense fallback={<div>...Loading</div>}>
+                <Popup/>
+            </Suspense>
             <div className='main_box w-3/4  shadow-lg z-10 rounded-md flex flex-col justify-start '>
                 <div className="menu ">
                     <Navbar></Navbar>
@@ -48,10 +45,10 @@ const Profile=(props)=>{
 
                 <div className=" content flex flex-shrink w-full">
                     <div className="sidebar ">
-                        {isLoad&& <Sidebar></Sidebar>}
+                         <Sidebar></Sidebar>
                     </div>
                     <div className=" product flex-shrink ">
-                      <Product></Product>
+                      {loading?<h1>isLoading....</h1>:<Product/>}
                     </div>
                 </div>
             </div>
@@ -59,14 +56,5 @@ const Profile=(props)=>{
     )
 }
 
-const mapStateToProps=createStructuredSelector({
-    id:selectId,
-    currentUser:selectCurrentUser
-})
 
-const mapDispatchToProps=dispatch=>({
-    setProduct:product=>dispatch(setProducts(product)),
-    setProductCount:()=>dispatch(setProductCount())
-})
-
-export default connect(mapStateToProps,mapDispatchToProps)(Profile);
+export default Profile;

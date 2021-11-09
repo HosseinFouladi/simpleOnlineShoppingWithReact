@@ -8,21 +8,26 @@ import { createStructuredSelector } from 'reselect';
 import { selectCurrentProduct } from '../../redux/product-redux/Product-selector';
 import { selectId } from '../../redux/user_redux/User-selector';
 import { setProductToUser } from '../../redux/user_redux/User-Action';
+import WithSpinner from './WithSpinner';
+import { useCallback } from 'react';
 const Product=(props)=>{
 
     const{product,userId,setProduct}=props;
     //add to cart
-     const handleAddtoCart=async(e)=>{
-        try{
-           const data= await saveUser(`${API_URL.ADD_TO_CART}${userId}`,product);
-           Notif("Adding To Cart","Product Successfully Added To Your Cart","success");
-           console.log(data)
-           setProduct(product);
-        }catch(err){
-            console.log(err)
-            Notif("Error Occured!","This Product Already Added to Your Shopping Cart!","info")
+     const handleAddtoCart=(e)=>{
+     
+        const addtocart=async()=>{
+            try{
+                const data= await saveUser(`${API_URL.ADD_TO_CART}${userId}`,product);
+                Notif("Adding To Cart","Product Successfully Added To Your Cart","success");
+                setProduct(product);
+             }catch(err){
+                 console.log(err)
+                 Notif("Error Occured!","This Product Already Added to Your Shopping Cart!","info")
+             }
         }
-     }
+        addtocart();
+     };
 
     return(
         <div className="w-full h-full overflow-hidden ">
