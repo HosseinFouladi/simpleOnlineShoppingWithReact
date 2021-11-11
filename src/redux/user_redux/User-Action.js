@@ -38,3 +38,8 @@ export const setIsLoading=(loading)=>({
 export const setLogout=()=>({
     type:USER_TYPES.USER_LOG_OUT
 })
+
+export const setTheme=mode=>({
+    type:USER_TYPES.THEME,
+    payload:mode
+})

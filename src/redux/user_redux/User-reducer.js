@@ -5,7 +5,8 @@ const USER_STATE={
     currentUser:{},
     productCount:0,
     popup:false,
-    isLoading:true
+    isLoading:true,
+    theme:'light'
 }
 
 export const userReducer=(state=USER_STATE,action)=>{
@@ -46,6 +47,11 @@ export const userReducer=(state=USER_STATE,action)=>{
                                         ...state,
                                         currentUser:{}
                                     }
+                                    case USER_TYPES.THEME:
+                                        return{
+                                            ...state,
+                                            theme:action.payload
+                                        }
             default:
                 return state;
     }

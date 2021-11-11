@@ -4,12 +4,12 @@ import "../index.css";
 import '../Styles/Form.css';
 import { Validatin } from "./../helpers/Validation";
 import {email_error,password_error}from '../helpers/Validation'
-import {saveUser}from '../helpers/Helper';
+import {Goto, saveUser}from '../helpers/Helper';
 import {API_URL} from '../helpers/Constants';
 import Notif from "../helpers/Notification";
 
 
-function Signup (){
+function Signup (props){
 
     const[isValid,setIsValid]=useState(false);
     const[emailError,setEmailError]=useState('');
@@ -35,9 +35,15 @@ function Signup (){
             [name]:value
         })
     };
+
+    const handleLogin=e=>{
+
+        Goto('/',props);
+    }
  
     return(
     <div className="w-full h-full main">
+       <button onClick={handleLogin}>Login</button>
         <div className="flex justify-center  center_parent w-4/5 h-4/5 ">
             <div className="w-full h-full mt-4 shadow-lg z-2 border-lg  flex mt-24">
                 <div className="bg-white w-1/2 h-full flex  flex-col items-center justify-between px-2">

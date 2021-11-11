@@ -26,3 +26,7 @@ export const selectLoading=createSelector(
     [user],
     user=>user.isLoading
 )
+export const selectTheme=createSelector(
+    [user],
+    user=>user.theme
+)

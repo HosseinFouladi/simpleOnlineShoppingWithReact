@@ -4,7 +4,11 @@ import {Switch,Route,BrowserRouter as Router}from 'react-router-dom';
 import ReactNotifications from 'react-notifications-component';
 import './index.css';
 import './Styles/Form.css';
+import { ThemeProvider } from 'styled-components';
 import ErrorBundry from './Compnenets/error_bundry/ErrorBundry';
+import { useSelector } from 'react-redux';
+import { selectTheme } from './redux/user_redux/User-selector';
+import { Container, darkTheme, lightTheme } from './Styles/GlobalStyles';
 const Signup=lazy(()=>import('./pages/Signup'));
 const Login=lazy(()=>import('./pages/Login'));
 const Profile=lazy(()=>import('./pages/Profile'));
@@ -12,9 +16,14 @@ const Profile=lazy(()=>import('./pages/Profile'));
 
 function App() {
 
+  const thememode=useSelector(selectTheme);
+  const theme=thememode==='light'?lightTheme:darkTheme
+
   return (
+ 
+    <ThemeProvider theme={theme}>
     <div className=" w-full  app">
-       <ReactNotifications />
+        <ReactNotifications />
         <Router>
          <Switch>
           <ErrorBundry>
@@ -26,8 +35,11 @@ function App() {
             </Suspense>
           </ErrorBundry>
          </Switch>
+      
        </Router>
     </div>
+    </ThemeProvider>
+
   )
 }
 

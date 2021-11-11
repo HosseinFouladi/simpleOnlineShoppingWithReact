@@ -13,6 +13,7 @@ import { LoginContainer } from './Login.style';
 import {  useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { selectCurrentUser } from '../redux/user_redux/User-selector';
+import { Container } from '../Styles/GlobalStyles';
 
 
 
@@ -68,8 +69,8 @@ const Login =(props)=>{
 
  
     return(
+      
         <LoginContainer>
-
         <div className="flex justify-center  center_parent w-4/5  ">
             <div className="w-full h-full mt-4 shadow-lg z-2 border-lg  flex ">
                 <div className="bg-white w-1/2 h-full flex  flex-col items-center justify-between px-2">
@@ -105,6 +106,7 @@ const Login =(props)=>{
          
         </div>
     </LoginContainer>
+ 
     )
 }
 

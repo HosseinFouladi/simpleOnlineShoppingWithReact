@@ -8,6 +8,7 @@ import { setLogout, setTogglePopup } from '../../redux/user_redux/User-Action';
 import '../../Styles/Navbar.css';
 import { useHistory } from 'react-router-dom';
 import { useCallback } from 'react';
+import Theme from './Theme';
 const Navbar=(props)=>{
 
     const {setSearch,productCount,fullName,setPopup,setLogout}=props;
@@ -54,6 +55,7 @@ const Navbar=(props)=>{
                  
                 </div>
             </div>
+            <Theme className="w-1/6"></Theme>
         </div>
         
     )
