@@ -5,13 +5,13 @@ import ReactNotifications from 'react-notifications-component';
 import './index.css';
 import './Styles/Form.css';
 import { ThemeProvider } from 'styled-components';
-import ErrorBundry from './Compnenets/error_bundry/ErrorBundry';
+import ErrorBundry from './error_bundry/ErrorBundry';
 import { useSelector } from 'react-redux';
 import { selectTheme } from './redux/user_redux/User-selector';
 import { Container, darkTheme, lightTheme } from './Styles/GlobalStyles';
-const Signup=lazy(()=>import('./pages/Signup'));
-const Login=lazy(()=>import('./pages/Login'));
-const Profile=lazy(()=>import('./pages/Profile'));
+const Signup=lazy(()=>import('./pages/signup/Signup'));
+const Login=lazy(()=>import('./pages/login/Login'));
+const Profile=lazy(()=>import('./pages/profile/Profile'));
 
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
             </Suspense>
           </ErrorBundry>
          </Switch>
-      
+         <Container/>
        </Router>
     </div>
     </ThemeProvider>

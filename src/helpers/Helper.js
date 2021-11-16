@@ -4,7 +4,7 @@ import { PAGE_SIZE } from "./Constants";
 
 export const saveUser=async(url,data)=>{
  const user={...data};
-  const post_data= Axios({
+  const post_data=Axios({
         method: 'POST',
         url: url,
         headers: {

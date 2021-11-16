@@ -8,7 +8,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectCurrentProduct } from '../../redux/product-redux/Product-selector';
 import { selectId } from '../../redux/user_redux/User-selector';
 import { setProductToUser } from '../../redux/user_redux/User-Action';
-import WithSpinner from './WithSpinner';
+import WithSpinner from '../spinner/WithSpinner';
 import { useCallback } from 'react';
 const Product=(props)=>{
 
