@@ -10,7 +10,6 @@ export const pagination=(products,page_number)=>{
   }
 
   export const calculatePages=(products)=>{
-
     const pages=Math.round(products/PAGE_SIZE);
     return pages;
   }

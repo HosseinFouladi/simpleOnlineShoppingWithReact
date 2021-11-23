@@ -7,7 +7,7 @@ import { fetchFailureProduct, fetchProductsSuccess } from "./Product-Action";
 import { PRODUCT_TYPES } from "./Product-type";
 
 export function* fetchProductsAsync(){
-    console.log(" i has been called")
+    console.log(" i has been called");
     try{
         const products=yield getData(API_URL.PRODUCT_LIST);
         yield put(fetchProductsSuccess(products.data));

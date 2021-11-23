@@ -8,7 +8,6 @@ import { selectCurrentUser, selectId, selectTheme } from '../../redux/user_redux
 import {fetchProductsStart} from '../../redux/product-redux/Product-Action';
 import { setProductCount } from '../../redux/user_redux/User-Action';
 import { selectLoading } from "../../redux/product-redux/Product-selector";
-import WithSpinner from "../../Compnenets/spinner/WithSpinner";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Suspense } from "react";
