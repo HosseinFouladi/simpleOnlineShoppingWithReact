@@ -37,11 +37,12 @@ const Login =(props)=>{
                 if(data.status===201){
                      dispatch(setCurrentUser(data.data));
                     // Goto(`/user/profile/${data.data.id}`,props);
-                    history.pushState(`/user/profile/${data.data.id}`)        
+                    history.pushState(`/user/profile/${data.data.id}`)
+                    
                 }                  
             }catch(err){
                 console.log(err)
-              Notif('Login_message',`User With This Information Not Exist  (${err.message})!`,'info');
+              Notif('Login_message',`User With This Information Not Exist   (${err.message})!`,'info');
             }
         }
         login();
