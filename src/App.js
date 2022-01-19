@@ -9,9 +9,12 @@ import ErrorBundry from './error_bundry/ErrorBundry';
 import { useSelector } from 'react-redux';
 import { selectTheme } from './redux/user_redux/User-selector';
 import { Container, darkTheme, lightTheme } from './Styles/GlobalStyles';
-const Signup=lazy(()=>import('./pages/signup/Signup'));
-const Login=lazy(()=>import('./pages/login/Login'));
+import { API_URL, LOGINTYPE, SIGNUPTYPE } from './helpers/Constants';
+
 const Profile=lazy(()=>import('./pages/profile/Profile'));
+const SignLog=lazy(()=>import('./pages/Sign_in_up_HOC/SignHOC'));
+
+
 
 
 function App() {
@@ -22,14 +25,14 @@ function App() {
   return (
  
     <ThemeProvider theme={theme}>
-    <div className=" w-full  app">
+    <div className=" w-full app">
         <ReactNotifications />
         <Router>
          <Switch>
           <ErrorBundry>
             <Suspense fallback={<div>...Loading</div>}>
-             <Route exact={true} path="/signup" component={Signup}></Route>
-             <Route exact={true} path="/" component={Login}></Route>
+             <Route exact={true} path="/signup" render={()=>(<SignLog type={SIGNUPTYPE} url={API_URL.SIGN_UP}></SignLog>)}></Route>
+             <Route exact={true} path="/" render={()=>(<SignLog type={LOGINTYPE} url={API_URL.LOGIN}></SignLog>)}></Route>
              <Route exact={true} path='/user/profile/:id/:name' component={Profile}></Route>
              <Route exact={true} path='/user/profile/:id' component={Profile}></Route>
             </Suspense>

@@ -1,6 +1,5 @@
 import InputForm from '../../Compnenets/form_input/input.componenet';
-import {useState } from "react";
-import "../../index.css";
+import {useState,useHistory } from "react";
 import '../../Styles/Form.css';
 import { Validatin } from "../../helpers/Validation";
 import {email_error,password_error}from '../../helpers/Validation'
@@ -20,6 +19,7 @@ const Login =(props)=>{
 
     const dispatch=useDispatch();
     const theme=useSelector(selectTheme);
+    const his=useHistory();
     
     const[isValid,setIsValid]=useState(false);
     const[emailError,setEmailError]=useState('');
@@ -36,11 +36,13 @@ const Login =(props)=>{
                 const data=isValid?await saveUser(API_URL.LOGIN,userInfo):null;
                 if(data.status===201){
                      dispatch(setCurrentUser(data.data));
-                     Goto(`/user/profile/${data.data.id}`,props);
+                    // Goto(`/user/profile/${data.data.id}`,props);
+                    history.pushState(`/user/profile/${data.data.id}`)
+                    
                 }                  
             }catch(err){
                 console.log(err)
-              Notif('Login_message',`User With This Information Not Exist (${err.message})!`,'info');
+              Notif('Login_message',`User With This Information Not Exist fffff  (${err.message})!`,'info');
             }
         }
         login();

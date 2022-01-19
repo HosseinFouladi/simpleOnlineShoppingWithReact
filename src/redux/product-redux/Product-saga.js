@@ -17,7 +17,7 @@ export function* fetchProductsAsync(){
 }
 
 export function* fetchProductsStart(){
-    yield takeLatest(PRODUCT_TYPES.SATRT_FETCHING_PRODUCTS,fetchProductsAsync)
+    yield takeEvery(PRODUCT_TYPES.SATRT_FETCHING_PRODUCTS,fetchProductsAsync)
 }
 
 function* startDelete({payload:{product,userId}}){
