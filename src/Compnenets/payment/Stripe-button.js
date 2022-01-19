@@ -19,8 +19,8 @@ const StripeCheckoutButton=({price})=>{
             amount={price}
             token={handlePayment}
             panelLabel='Pay Now'
-            stripeKey={publishKey}
-        />
+            stripeKey={publishKey}           
+            />
         
     )
 }
