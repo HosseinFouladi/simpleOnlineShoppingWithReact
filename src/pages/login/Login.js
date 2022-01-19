@@ -42,7 +42,7 @@ const Login =(props)=>{
                 }                  
             }catch(err){
                 console.log(err)
-              Notif('Login_message',`User With This Information Not Exist fffff  (${err.message})!`,'info');
+              Notif('Login_message',`User With This Information Not Exist   (${err.message})!`,'info');
             }
         }
         login();
